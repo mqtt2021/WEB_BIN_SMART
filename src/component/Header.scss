@@ -1,0 +1,23 @@
+.navbar{
+    background-color: rgb(13, 234, 160);
+    color: aliceblue;
+    .nav{
+        margin-left: 30px;
+        .FaShoppingCart{
+            color: black;
+            font-size: 30px;
+
+        }
+
+        p{
+            margin-bottom: 0px;
+            color: black;
+        }
+        .nav-link{
+            color: rgb(255, 255, 255);
+            font-weight: 600;
+            font-size: 17px;
+        }
+        
+    }
+}

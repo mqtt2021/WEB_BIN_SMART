@@ -1,0 +1,21 @@
+.father-chart{
+    display: flex;
+   width: 100%;
+        .div-select-only-fromto-char{
+            margin-left: 200px;
+            width: 60%;
+               margin-top: 70px;
+                    .div-select-fromto{
+                        display: flex;
+                        column-gap: 20px;
+                        .btn{
+                            margin-top: 35px;
+                            margin-left: 50px;
+                            height: 40px;
+                        }
+                    }
+        }
+                .father-img-chart{
+                    margin-top: 100px;
+                }
+}

@@ -1,0 +1,109 @@
+.father-bin{
+    width: 100%;
+    .div-img-bin{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+}
+
+.search-and-filter{
+    width: 100%;
+    .filter-status{
+        width: 10%;
+    }
+    .filter-warning{
+        width: 10%;
+    }
+    .filter-connection{
+        width: 15%;
+    }
+    .filter-location{
+        width: 20%;
+    }
+    .filter-available{
+        width: 15%;
+    }
+    .filter-compression{
+
+        width: 15%;
+    }
+    .filter-power{
+        width: 15%;
+    }
+    .filter{
+        
+        .div-input{
+            margin-top: 10px;
+            .compression-input{
+                width: 20%;
+            }
+        }
+        
+        .select{
+            width: 70%;
+        }
+    }
+    display: flex;
+    margin-top: 20px;
+    .form-search-location{
+
+        .form-select{
+                width: 200px;
+        }
+        .form-search-street{
+                margin-top: 20px;
+                width: 90%;
+            display: flex;
+            .form-input{
+                    width:80% ;
+            }
+            .form-button{
+
+            }
+        }
+            
+    
+    }
+}
+.table{
+    thead{
+        tr{
+            th{
+                text-align: center;
+            }
+        }
+    }
+    margin-top: 70px;
+    td{
+    .fault{
+       font-size: 30px;
+    }
+   .th-organic{
+            .img-organic{
+                    width: 50%;
+            }
+   }
+    text-align: center;
+    .connecting{
+        color: rgb(2, 255, 14);
+    }
+    .disconnect{
+        color: red;
+    }
+    .low{
+        color: green;
+    }
+    .high{
+        color: red;
+    }
+    .medium{
+        color: yellow;
+    }
+    .icon-infor{
+        font-size: 30px;
+    }
+    
+}
+}
