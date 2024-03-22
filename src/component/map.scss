@@ -1,4 +1,29 @@
 .leaflet-container {
-    height: 600px;
+    height: 680px;
     width: 100%;
+  }
+
+  .div-quan-duong{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    .div-duong{
+        display: flex;
+    }
+  }
+
+  .popup-item{
+    display: flex;
+    justify-content: space-between;
+    .RED{
+      color:red ;
+    }
+    .YELLOW{
+      color: yellow;
+    }
+    .GREEN{
+      color: green;
+    }
   }

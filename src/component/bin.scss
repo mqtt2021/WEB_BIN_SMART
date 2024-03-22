@@ -76,7 +76,14 @@
         }
     }
     margin-top: 70px;
+    .td-action{
+        display: flex;
+    }
     td{
+    .location{
+        display: flex;
+        flex-direction: column;
+    }
     .fault{
        font-size: 30px;
     }

@@ -1,17 +1,49 @@
-import React from 'react'
+import React ,{useEffect,useState} from 'react'
 import { GiAutoRepair } from "react-icons/gi";
 import './bin.scss'
-import Dropdown from 'react-bootstrap/Dropdown';
 import { Link } from 'react-router-dom';
 import { FaCircle } from "react-icons/fa6";
 import { FaTimesCircle } from "react-icons/fa";
-import {list} from './API_TrashBin/List'
 import { IoInformationCircle } from "react-icons/io5";
 import Form from 'react-bootstrap/Form';
 import Table from 'react-bootstrap/Table';
-import organic from '../asset/images/organic.png'
+import { MdDelete } from "react-icons/md";
 import { BiSolidError } from "react-icons/bi";
+import axios from 'axios';
 function Bin() {
+ 
+  const [Bins, setBins] = useState([]);
+  const getcities = async () => {
+    
+    try {
+      const response = await axios.get('http://localhost:3001/cities');
+
+      const BinsData = response.data;
+        
+        setBins(BinsData);
+      
+    } 
+    catch (error) {
+      console.error('Đã xảy ra lỗi:', error);
+    }
+  }
+
+  useEffect(() => {
+    getcities();
+  }, [])
+
+  const handleDelete = async (id) => {
+    try {
+     alert('Bạn có chắc chắn muốn xóa thùng rác này không')
+      await axios.delete(`http://localhost:3001/cities/${id}`);
+            const response = await axios.get('http://localhost:3001/cities'); 
+            setBins(response.data)
+      
+    } catch (error) { 
+      alert('Failed to delete the item.');
+    }
+  };
+  console.log('Bin')
   return (
     <>
     <div className='search-and-filter'>
@@ -152,6 +184,12 @@ function Bin() {
                
         </div>  
     </div>
+    <div>
+      <Link to={'/addnewbin'}>
+         <button type="button" class="btn btn-success" style={{ float: 'right'}}>Thêm thùng rác</button>
+      </Link>
+   
+    </div>
   <Table   bordered hover className='table'>
     <thead>
       <tr>
@@ -161,11 +199,12 @@ function Bin() {
            <th rowspan='2'>Cảnh báo</th>
            <th rowspan='2'>Kết nối</th>
            <th rowspan='2'>Vị trí</th>
-           
            <th rowspan='2'>Năng lượng</th>
            <td colspan="3" style={{ textAlign: 'center',fontWeight:'bold'}}>Mức đầy</td>
            <th colspan="3" style={{ textAlign: 'center',fontWeight:'bold'}}>Số lần ép trong ngày</th>
-           <th rowspan='2'>Thông tin chi tiết</th>
+           <th rowspan='2'>Action</th>
+           
+           
       </tr>
       <tr>
           
@@ -175,26 +214,53 @@ function Bin() {
            <th scope="col">Hữu cơ</th>
            <th scope="col">Vô cơ tái chế được</th>
            <th scope="col">Vô cơ không tái chế được</th>
-           
+          
       </tr>
     </thead>
     <tbody>
-    {list.map((item,index)=>
+    {Bins.map((item,index)=>
  
      <tr key={index} className=''>
             <td>{item.id}</td>
-            <td>{item.Status === 'Đang sửa chữa' ? <GiAutoRepair/> : ''}</td>
-            <td className={(item.fault.ep_khong_duoc===true)||(item.fault.khong_dong_cua===true) ? 'bg-danger':''} >{(item.fault.ep_khong_duoc===true)||(item.fault.khong_dong_cua===true) ? <BiSolidError className='fault'/>:''}</td>
-            <td>{item.Connected ? <FaCircle className='connecting'/> : <FaTimesCircle className='disconnect'/>}</td>
-            <td>{item.location.district} {item.location.street} <button type="button" class="btn btn-info">Xem vị trí</button></td>
-            <td>{item.Power}</td> 
-            <td className={item.Available.Organic === 'Cao' ? 'bg-danger':''}>{item.Available.Organic}</td>
-            <td className={item.Available.Inorganic_recyclables === 'Cao' ? 'bg-danger':''}>{item.Available.Inorganic_recyclables}</td>
-            <td className={item.Available.Non_recyclables_inorganic === 'Cao' ? 'bg-danger':''}>{item.Available.Non_recyclables_inorganic}</td>
-            <td className={item.Trash_compression.Organic === 'Cao' ? 'bg-danger':''}>{item.Trash_compression.Organic}</td>
-            <td className={item.Trash_compression.Inorganic_recyclables === 'Cao' ? 'bg-danger':''}>{item.Trash_compression.Inorganic_recyclables}</td>
-            <td className={item.Trash_compression.Non_recyclables_inorganic === 'Cao' ? 'bg-danger':''}>{item.Trash_compression.Non_recyclables_inorganic}</td>
-            <td><Link to={`/bin/${item.id}/detail`}><button type="button" class="btn btn-info"><IoInformationCircle className='icon-infor'/></button></Link></td>
+            <td>{item.status === 'repair' ? <GiAutoRepair/> : ''}</td>
+            <td className={(item.warning.door===true)||(item.warning.compress===true) ? 'bg-danger':''} >{(item.warning.door===true)||(item.warning.compress===true) ? <BiSolidError className='fault'/>:''}</td>
+            <td>{item.connected ? <FaCircle className='connecting'/> : <FaTimesCircle className='disconnect'/>}</td>
+            <td className='location'>
+              <div>{item.district_name} {item.street_name}</div>
+              <div>
+              <Link
+                    to="/map"
+                    state={{
+                            latBin: item.lat,
+                            lngBin: item.lng
+                      }}                            
+              >
+                  <button type="button" class="btn btn-info">Xem vị trí</button>
+              </Link>
+                
+              </div>
+            </td>
+            <td>{item.power}</td> 
+            <td className={item.available.Organic === 'HIGH' ? 'bg-danger':''}>{item.available.Organic}</td>
+            <td className={item.available.Inorganic_recyclables === 'HIGH' ? 'bg-danger':''}>{item.available.Inorganic_recyclables}</td>
+            <td className={item.available.Non_recyclables_inorganic === 'HIGH' ? 'bg-danger':''}>{item.available.Non_recyclables_inorganic}</td>
+            <td >{item.compression.Organic}</td>
+            <td >{item.compression.Inorganic_recyclables}</td>
+            <td >{item.compression.Non_recyclables_inorganic}</td>
+            <td className='td-action'>
+            <Link to={`/bin/${item.id}/detail`}>
+                <button type="button" class="btn btn-info">
+                    <IoInformationCircle className='icon-infor'/>
+                </button>
+            </Link>
+           
+                <button type="button" class="btn btn-danger"
+                       onClick={ (e) => handleDelete(item.id) }
+                >
+                    <MdDelete className='icon-infor'/>
+                </button>
+           
+            </td>
     </tr> 
   )}
    

@@ -1,7 +1,6 @@
 import { Route,Routes } from 'react-router-dom';
 import React from 'react'
 import Map from '../component/Map';
-
 import Bin from '../component/Bin';
 import Login from '../component/Login';
 
@@ -20,6 +19,9 @@ import Grab from '../Brand/Grab';
 
 import Statistics from '../component/Statistics';
 import Lotte from '../Brand/Lotte';
+
+import AddNewBin from '../component/AddNewBin/AddNewBin';
+import Updatebin from '../component/UpdateBin/UpdateBin';
 function AppRoutes() {
   return (
     <div>
@@ -33,8 +35,6 @@ function AppRoutes() {
                
                 <Route path="/register" element={ <Register/>} />
 
-
-
                 <Route path="/voucheruser" element={ <VoucherUser/>} />
 
                 <Route path="/voucher/shoppe" element={ <Shoppe/>} />
@@ -42,13 +42,15 @@ function AppRoutes() {
                 <Route path="/voucher/lotte" element={ <Lotte/>} />
                 <Route path="/voucher/thegioididong" element={ <Thegioididong/>} />
                 
-               
-
-
                 <Route path="/bin/:id/chart" element={<Chart/>} />
-               
                 <Route path="/bin/:id/history" element={<History/>} />
                 <Route path="/bin/:id/detail" element={<Detail/>} />
+
+                <Route path="/addnewbin" element={<AddNewBin/>} />
+
+
+                <Route path="/bin/:id/detail/update" element={<Updatebin/>} />
+
             </Routes> 
             {/* <PrivateRoute path="/users"> */}
                       
